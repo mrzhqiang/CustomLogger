@@ -3,6 +3,14 @@
 ### 怎样使用？
 - 添加依赖
 ```
+// 根目录下
+allprojects {
+	repositories {
+		...
+		maven { url "https://jitpack.io" }
+	}
+}
+// 需要使用的工程下
 dependencies {
         compile 'com.github.mrzhqiang:CustomLogger:1.0'
 }
