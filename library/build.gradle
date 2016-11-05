@@ -30,3 +30,13 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.orhanobut:logger:1.15'
 }
+
+task makeJar(type: Copy) {
+    delete '/libs/CustomLogger.jar'
+    from('build/intermediates/bundles/release/')
+    into('/libs/')
+    include('classes.jar')
+    rename ('classes.jar', 'CustomLogger.jar')
+}
+
+makeJar.dependsOn(build)
