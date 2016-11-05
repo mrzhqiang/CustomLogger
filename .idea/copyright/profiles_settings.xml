@@ -1,5 +1,8 @@
 <component name="CopyrightManager">
   <settings default="LICENSE">
+    <module2copyright>
+      <element module="Project Files" copyright="LICENSE" />
+    </module2copyright>
     <LanguageOptions name="__TEMPLATE__">
       <option name="separateBefore" value="true" />
       <option name="separateAfter" value="true" />
