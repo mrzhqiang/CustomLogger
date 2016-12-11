@@ -12,7 +12,7 @@ allprojects {
 }
 // 需要使用的工程下
 dependencies {
-        compile 'com.github.mrzhqiang:CustomLogger:1.0'
+        compile 'com.github.mrzhqiang:CustomLogger:1.1'
 }
 ```
 - 创建jar包
