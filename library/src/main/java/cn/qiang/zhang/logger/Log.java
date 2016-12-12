@@ -17,6 +17,8 @@
  */
 package cn.qiang.zhang.logger;
 
+import android.text.TextUtils;
+
 import com.orhanobut.logger.Logger;
 
 /**
@@ -269,6 +271,14 @@ public final class Log {
 			throw new NullPointerException("IPrint is null");
 		}
 		Setting.mLogger = mLogger;
+	}
+
+	public static LoggerPrint createLogger() {
+		return new LoggerPrint();
+	}
+
+	public static void reset() {
+		setLogger(Print.print);
 	}
 
 }

@@ -21,10 +21,12 @@ package cn.qiang.zhang.customlogger;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.orhanobut.logger.LogLevel;
 import com.orhanobut.logger.Logger;
 
 import cn.qiang.zhang.logger.IPrint;
 import cn.qiang.zhang.logger.Log;
+import cn.qiang.zhang.logger.LoggerPrint;
 
 /**
  * 兼容方案，第三方日志工具与系统工具轻松转换，样例
@@ -53,13 +55,24 @@ public class SampleLoggerActivity extends AppCompatActivity {
 	private void explainLog() {
 	    /*logger*/
 		// 1 使用Logger需要这样做
-		Logger.init();
-		// 2 自定义或重设Logger的TAG
-		Logger.init("CustomTAG");
+		LoggerPrint print = Log.createLogger();
+		print.init();
+		Log.setLogger(print.loggerPrint);
+		// 2 重设Logger的Settings
+		print.init("CustomTAG")
+				.methodCount(5)
+				.hideThreadInfo()
+				.logLevel(LogLevel.NONE)
+				.reset();
 		// 3 json
 		Logger.json("{json:这是json格式吗？}");
 		// 4 xml
 		Logger.xml("<h3>这是标题</h3>");
+		// 5.Log.d
+		Log.d("Logger适配成功");
+		// 6.reset
+		Log.reset();
+
 		/*Log*/
 		// 1 设置使用自定义tag
 		Log.customTag(true);
@@ -86,7 +99,9 @@ public class SampleLoggerActivity extends AppCompatActivity {
 
 		@Override
 		public int d(String tag, String msg) {
-			return logger.d(tag, msg);
+			Logger.log(Logger.DEBUG, tag, msg, null);
+			// or Logger.t(tag).d(msg);
+			return 0;
 		}
 
 		@Override
