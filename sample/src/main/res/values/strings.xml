@@ -16,4 +16,6 @@
   ~
   -->
 
-<manifest package="cn.qiang.zhang.logger"/>
+<resources>
+    <string name="app_name">CustomLogger</string>
+</resources>
