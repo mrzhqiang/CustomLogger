@@ -17,6 +17,8 @@
  */
 package cn.qiang.zhang.logger;
 
+import com.orhanobut.logger.Logger;
+
 /**
  * 格式化日志打印
  * <p>

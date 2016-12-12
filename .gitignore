@@ -1,9 +1,42 @@
-*.iml
-.gradle
+#忽略应用程序
+*.apk
+*.ap_
+
+#忽略 Dalvik VM
+*.dex
+
+#忽略 Java class
+*.class
+
+#忽略自动生成的目录
+bin/
+gen/
+
+#忽略本地配置（sdk路径）
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
+
+#忽略 Eclipse 目录
+.classpath
+.project
+proguard/
+
+#忽略 Android Studio 目录
+.idea
+.gradle
 /build
+*.iml
+*.jks
+
+#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
+
+# Misc
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+
 /captures
 .externalNativeBuild
+
+# Maven output folder
+target
