@@ -17,8 +17,6 @@
  */
 package cn.qiang.zhang.logger;
 
-import android.text.TextUtils;
-
 import com.orhanobut.logger.Logger;
 
 /**
