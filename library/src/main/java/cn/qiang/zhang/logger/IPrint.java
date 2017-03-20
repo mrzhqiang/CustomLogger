@@ -18,39 +18,39 @@
 package cn.qiang.zhang.logger;
 
 /**
- * 打印接口，根据{@link android.util.Log}的相关静态方法设定，旨在灵活适配。
+ * 通过实现这个接口，来替换旧项目的日志打印工具。
  * <p>
  * Crated by mrZQ on 2016/12/11.
  */
 
 public interface IPrint {
 
-	int v(String tag, String msg);
+    int v(String tag, String msg);
 
-	int v(String tag, String msg, Throwable tr);
+    int v(String tag, String msg, Throwable tr);
 
-	int d(String tag, String msg);
+    int d(String tag, String msg);
 
-	int d(String tag, String msg, Throwable tr);
+    int d(String tag, String msg, Throwable tr);
 
-	int i(String tag, String msg);
+    int i(String tag, String msg);
 
-	int i(String tag, String msg, Throwable tr);
+    int i(String tag, String msg, Throwable tr);
 
-	int w(String tag, String msg);
+    int w(String tag, String msg);
 
-	int w(String tag, String msg, Throwable tr);
+    int w(String tag, String msg, Throwable tr);
 
-	int w(String tag, Throwable tr);
+    int w(String tag, Throwable tr);
 
-	int e(String tag, String msg);
+    int e(String tag, String msg);
 
-	int e(String tag, String msg, Throwable tr);
+    int e(String tag, String msg, Throwable tr);
 
-	int wtf(String tag, Throwable tr);
+    int wtf(String tag, Throwable tr);
 
-	int wtf(String tag, String msg);
+    int wtf(String tag, String msg);
 
-	int wtf(String tag, String msg, Throwable tr);
+    int wtf(String tag, String msg, Throwable tr);
 
 }

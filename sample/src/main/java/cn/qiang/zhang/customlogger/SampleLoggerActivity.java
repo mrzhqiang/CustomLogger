@@ -19,10 +19,15 @@ package cn.qiang.zhang.customlogger;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.orhanobut.logger.Logger;
 
+import java.util.Collections;
+import java.util.EmptyStackException;
+
 import cn.qiang.zhang.logger.Log;
+import timber.log.Timber;
 
 /**
  * 兼容方案，第三方日志工具与系统工具轻松转换，样例
@@ -35,209 +40,232 @@ import cn.qiang.zhang.logger.Log;
  */
 public class SampleLoggerActivity extends AppCompatActivity {
 
-	private static final String TAG = "SampleLoggerActivity";
+    private static final String TAG = "SampleLoggerActivity";
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_sample_logger);
-		// 说明Log的使用方法，关于第三方日志工具，可以在这里找到：https://github.com/orhanobut/logger
-		explainLog();
-	}
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sample_logger);
+        // 说明Log的使用方法，关于第三方日志工具，可以在这里找到：
+        // https://github.com/orhanobut/logger.git
+        // https://github.com/JakeWharton/timber.git
 
-	/**
-	 * 在这里，将讲述如何使用Log日志兼容工具
-	 */
-	private void explainLog() {
-	    /*logger*/
-		// 1 使用Logger需要这样做
-		Log.pretty();
-		// 3 json
-		Logger.json("{json:这是json格式吗？}");
-		// 4 xml
-		Logger.xml("<h3>这是标题</h3>");
-		// 5.Log.d
-		Log.d("Logger适配成功");
-		// 6.简单日志
-		Log.setLogger(null);
+        explainLog();
+
+        findViewById(R.id.btn_show_logger).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                explainLog();
+            }
+        });
+    }
+
+    /**
+     * 在这里，将讲述如何使用Log日志兼容工具
+     */
+    private void explainLog() {
+        /*Logger*/
+        // 1 使用Logger替换旧项目Log需要这样做
+        Log.pretty();
+        // 2 直接用Logger打印 object map list set
+        Logger.d(new Object());
+        Logger.d(Collections.EMPTY_LIST);
+        Logger.d(Collections.EMPTY_MAP);
+        Logger.d(Collections.EMPTY_SET);
+        // 3 json
+        Logger.json("{json:这是json格式吗？}");
+        // 4 xml
+        Logger.xml("<h3>这是标题</h3>");
+        // 5.尝试适配 Log.d
+        Log.d("Logger适配成功");
+
+        /*Timber*/
+        // 1 使用Timber替换旧项目Log需要这样做
+        Log.timber();
+        // 2.直接用Timber打印 Message
+        Timber.d("message");
+        // 3.尝试适配
+        Log.e(TAG, "这是一个自定义错误", new EmptyStackException());
 
 		/*Log*/
-		// 1 设置使用自定义tag
-		Log.customTag(true);
-		// 2 打印
-		Log.d(TAG, "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG\n头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印TAG\n头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印\nTAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG\n头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TA\nG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打\n印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG\n头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TA\nG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG\n头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印T\nAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG\n头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头印TA\nG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TA\nG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TA\nG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头"+
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
-				"TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
-				"印TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
-				"打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头");
-	}
+		Log.debug(false);// 调试开关，日志其实很消耗性能，1ms延迟对于用户来说，都是罪魁祸首。
+        Log.setLogger(null);
+        // 1 设置使用自定义tag
+        Log.customTag(true);
+        // 2 打印 (这里测试超过Android Log的4000长度限制 ≈13000 chars)
+        Log.i(TAG, "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG\n头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印TAG\n头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印\nTAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG\n头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TA\nG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打\n印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG\n头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TA\nG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG\n头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印T\nAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG\n头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头印TA\nG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TA\nG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TA\nG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打\n印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头\n打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印" +
+                "TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打" +
+                "印TAG头打印TAG头打印TAG头打印TAG头打印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头印TAG头打印TAG头打印\nTAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头印T\nAG头打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头" +
+                "打印TAG头打印TAG头打印TAG头打印TAG头打印TAG头");
+    }
 
 }

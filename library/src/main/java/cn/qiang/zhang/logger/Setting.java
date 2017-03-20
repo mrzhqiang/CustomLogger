@@ -25,20 +25,19 @@ package cn.qiang.zhang.logger;
 
 final class Setting {
 
-	/** 标签 */
-	static final String DEFAULT_TAG = "Log";
-	/* 日志打印开关 */
-	static boolean showV = true;
-	static boolean showD = true;
-	static boolean showI = true;
-	static boolean showW = true;
-	static boolean showE = true;
-	static boolean showWtf = true;
-	/** 是否开启自定义标签，true 传值标签；false 固定标签 */
-	static boolean isCustomTag = false;
+    /** 标签 */
+    static final String DEFAULT_TAG = "Log";
 
-	private Setting() {
-		// no instance
-	}
+    static boolean showV = true;
+    static boolean showD = true;
+    static boolean showI = true;
+    static boolean showW = true;
+    static boolean showE = true;
+    static boolean showWtf = true;
+
+    /** 是否开启自定义标签，true 传值标签；false 固定标签 */
+    static boolean isCustomTag = false;
+
+    private Setting() {/*no instance*/}
 
 }
