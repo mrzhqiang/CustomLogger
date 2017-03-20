@@ -26,5 +26,8 @@ Log.customTag(true); // 表示输出传入的TAG，否则将输出默认TAG
 Log.debug(false/true); // true为默认打印；false表示屏蔽打印
 // 目前版本将Line改为File.Line，即可以随时追踪输出日志的位置，类似异常消息定位
 // 比如：SampleLoggerActivity.java:30
+
+// 2017/03/20 change
+// 增加对Timber的接口
 ```
-#### 其他自定义接口替换打印工具，请参见sample。
+#### 其他自定义接口替换打印工具，请参见[sample](https://github.com/mrzhqiang/CustomLogger/tree/master/sample)。
