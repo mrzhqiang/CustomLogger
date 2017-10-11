@@ -1,5 +1,5 @@
-# DebugLog
-### DebugLog是什么？
+# debug-log
+### debug-log是什么？
 - 针对系统日志的一个兼容类
 - TAG限定在23个字符以内
 - content约3000时自动换行，以免丢失相关信息
@@ -17,6 +17,6 @@ allprojects {
    
 // 需要依赖的工程
 dependencies {
-  compile 'com.github.mrzhqiang:DebugLog:1.0'
+  compile 'com.github.mrzhqiang:debug-log:1.0'
 }
 ~~~
