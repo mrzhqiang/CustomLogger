@@ -17,5 +17,4 @@
 
 <resources>
     <string name="app_name">CustomLogger</string>
-    <string name="clicked_show_log">Clicked Show Log</string>
 </resources>
