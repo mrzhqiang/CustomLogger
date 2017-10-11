@@ -8,7 +8,7 @@ import java.util.List;
 
 public final class Log {
     private static final String LOG_NAME = Log.class.getName();
-    private static final int CHUNK_SIZE = 4000;
+    private static final int CHUNK_SIZE = 3000;
     private static final int MAX_TAG_SIZE = 23;
 
     private static boolean showD = true;
