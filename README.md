@@ -17,6 +17,6 @@ allprojects {
    
 // 需要依赖的工程
 dependencies {
-  compile 'com.github.mrzhqiang:debug-log:1.0'
+  compile 'com.github.mrzhqiang:debug-log:1.1'
 }
 ~~~
